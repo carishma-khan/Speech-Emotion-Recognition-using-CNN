@@ -66,3 +66,5 @@ ax[1].set_title('Training & Testing Accuracy')
 ax[1].legend()
 ax[1].set_xlabel("Epochs")
 plt.show()
+
+print(classification_report(y_test, y_pred))
