@@ -63,19 +63,6 @@ Features['labels'] = Y
 Features.to_csv('Emotion_Features.csv', index=False)
 Features.head()
 
-# As this is a multiclass classification problem onehotencoding our Y.
-encoder = OneHotEncoder()
-#Y = encoder.fit_transform(np.array(Y).reshape(-1,1)).toarray()
-Y = encoder.fit_transform(Y.reshape(-1, 1)).toarray()
 
-# splitting data
-x_train, x_test, y_train, y_test = train_test_split(X, Y, random_state=0, shuffle=True)
-print(x_train.shape, y_train.shape, x_test.shape, y_test.shape)
-
-# scaling our data with sklearn's Standard scaler
-scaler = StandardScaler()
-x_train = scaler.fit_transform(x_train)
-x_test = scaler.transform(x_test)
-x_train.shape, y_train.shape, x_test.shape, y_test.shape
 
 
