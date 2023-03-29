@@ -3,7 +3,7 @@ Ravdess = "Datasets/ravdess-emotional-speech-audio/audio_speech_actors_01-24/"
 Crema = "Datasets/cremad/AudioWAV/"
 Tess = "Datasets/toronto-emotional-speech-set-tess/tess toronto emotional speech set data/TESS Toronto emotional speech set data/"
 Savee = "Datasets/surrey-audiovisual-expressed-emotion-savee/ALL/"
-Emo="Datasets/berlin-database-of-emotional-speech-emodb/wav/"
+#Emo="Datasets/berlin-database-of-emotional-speech-emodb/wav/"
 
 ravdess_list = os.listdir(Ravdess)
 
@@ -120,50 +120,50 @@ Savee_df = pd.concat([emotion_df, path_df], axis=1)
 Savee_df.head()
 
 
-Emo_list = os.listdir(Emo)
-    file_emotion = []
-    file_path = []
-for dir in Emo_list:
-      file_path.append(Emo + dir)
-       
-                if name[0:2] in '0310111215':  # MALE
+
+Emo_list = "/kaggle/input/berlin-database-of-emotional-speech-emodb/wav/"
+
+file_emotion = []
+file_path = []
+for root, dirs, files in os.walk(Emo_list):
+    for name in files:
+        if name[0:2] in '0310111215':  # MALE
                     if name[5] == 'W':  # Ärger (Wut) -> Angry
-                        file_emotion.append('angry')
+                        file_emotion.append('male_angry')
                     elif name[5] == 'E':  # Ekel -> Disgusted
-                        file_emotion.append('disgust')
+                        file_emotion.append('male_disgust')
                     elif name[5] == 'A':  # Angst -> Angry
-                        emotion.append('fear')
+                        file_emotion.append('male_fear')
                     elif name[5] == 'F':  # Freude -> Happiness
-                        file_emotion.append('happy')
+                        file_emotion.append('male_happy')
                     elif name[5] == 'T':  # Trauer -> Sadness
-                        file_emotion.append('sad')
+                        file_emotion.append('male_sad')
                     elif name[6] == 'N':
-                        file_emotion.append('neutral')
+                        file_emotion.append('male_neutral')
                     else:
                         file_emotion.append('unknown')
-                else:
+        else:
                     if name[5] == 'W':  # Ärger (Wut) -> Angry
-                        file_emotion.append('angry')
+                        file_emotion.append('female_angry')
                     elif name[5] == 'E':  # Ekel -> Disgusted
-                        file_emotion.append('disgust')
+                        file_emotion.append('female_disgust')
                     elif name[5] == 'A':  # Angst -> Angry
-                        file_emotion.append('fear')
+                        file_emotion.append('female_fear')
                     elif name[5] == 'F':  # Freude -> Happiness
-                        file_emotion.append('happy')
+                        file_emotion.append('female_happy')
                     elif name[5] == 'T':  # Trauer -> Sadness
-                        file_emotion.append('sad')
+                        file_emotion.append('female_sad')
                     elif name[6] == 'N':
-                        file_emotion.append('neutral')
+                        file_emotion.append('female_neutral')
                     else:
-                        file_emotion.append('unknown')            
+                        file_emotion.append('unknown')
 
-# dataframe for emotion of files
-emotion_df = pd.DataFrame(file_emotion, columns=['Emotions'])
+                    file_path.append(os.path.join(Emo_list, name))
 
-# dataframe for path of files.       
-path_df = pd.DataFrame(file_path, columns=['Path'])
-emo_df = pd.concat([emotion_df, path_df], axis=1)
-emodb_df = pd.concat([emodb_df, pd.DataFrame(file_path, columns=['path'])], axis=1)
+        emodb_df = pd.DataFrame(file_emotion, columns=['Emotions'])
+       # emodb_df['source'] = 'EMODB'
+        emodb_df = pd.concat([emodb_df, pd.DataFrame(file_path, columns=['Path'])], axis=1)
+
 emodb_df.head()
 
 # creating Dataframe using all the 4 dataframes we created so far.
