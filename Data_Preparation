@@ -167,6 +167,6 @@ for root, dirs, files in os.walk(Emo_list):
 emodb_df.head()
 
 # creating Dataframe using all the 4 dataframes we created so far.
-data_path = pd.concat([Ravdess_df, Crema_df, Tess_df, Savee_df, emodb_df], axis = 0)
+data_path = pd.concat([Ravdess_df, Crema_df, Tess_df, Savee_df,emodb_df], axis = 0)
 data_path.to_csv("Emotion_data.csv",index=False)
 data_path.head()
